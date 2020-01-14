@@ -101,6 +101,8 @@ template <class MESH> class BallPivoting: public AdvancingFront<MESH> {
     delete tree;
   }
 
+// seed triangle 을 찾는 과정임!! 제일 처음에 하는거
+
   bool Seed(int &v0, int &v1, int &v2) {
     //get a sphere of neighbours
     while(++last_seed < (int)(this->mesh.vert.size())) {
@@ -277,6 +279,7 @@ template <class MESH> class BallPivoting: public AdvancingFront<MESH> {
       }
 
       /* Angle between old center and new center */
+      // 시작하는 face 의 기준 edge 에서 구의 중심으로 향하는 벡터와 새로운 매쉬의 기준 edge 에서 구의 중심으로 향하는 벡터와의 각도가 특정 각 이하여야한다.
       ScalarType alpha = OrientedAngleRad(start_pivot, center - middle, axis);
 
       /* adding a small bias to already chosen vertices.
@@ -352,7 +355,7 @@ template <class MESH> class BallPivoting: public AdvancingFront<MESH> {
 
   /* returns the sphere touching p0, p1, p2 of radius r such that
      the normal of the face points toward the center of the sphere */
-
+// 반경 r의 p0, p1, p2에 닿는 구를 반환합니다. 면의 법선이 구의 중심을 향함
   bool FindSphere(const Point3x &p0, const Point3x &p1, const Point3x &p2, Point3x &center) {
     //we want p0 to be always the smallest one.
     Point3x p[3];
